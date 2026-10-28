@@ -11,3 +11,16 @@ document.getElementById('consult').addEventListener('submit', event => {
  document.getElementById('status').textContent = '상담 메모를 다운로드했습니다. 매장으로 전송되지는 않습니다.';
 });
 document.getElementById('name').addEventListener('input', event => event.target.setCustomValidity(''));
+
+const photoDialog = document.getElementById('photo-dialog');
+document.querySelectorAll('[data-photo]').forEach(button => button.addEventListener('click', () => {
+ const image = document.getElementById('photo-full');
+ image.src = button.dataset.photo;
+ image.alt = button.querySelector('img').alt;
+ document.getElementById('photo-caption').textContent = image.alt;
+ photoDialog.showModal();
+ document.body.classList.add('photo-open');
+}));
+document.querySelector('.photo-close').addEventListener('click', () => photoDialog.close());
+photoDialog.addEventListener('click', event => {if(event.target === photoDialog){const box=photoDialog.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)photoDialog.close();}});
+photoDialog.addEventListener('close', () => document.body.classList.remove('photo-open'));
